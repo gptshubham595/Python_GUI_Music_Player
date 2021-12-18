@@ -85,7 +85,7 @@ class MusicPlayer:
         self.playlist2.pack(fill=BOTH)
         
         # Changing Directory for fetching Songs
-        os.chdir("D:/OneDrive - Indian Institute of Technology Guwahati/Project/tutorpoint2/music")
+        os.chdir("D:/Project/music")
         # Fetching Songs
         songtracksAll = os.listdir()
         # Inserting Songs into Playlist
@@ -94,6 +94,7 @@ class MusicPlayer:
           self.playlist.insert(END,track)
           
     def play_time(self):
+        self.track.set(self.playlist2.get(ACTIVE))
         song_length=pygame.mixer.Sound(self.playlist2.get(ACTIVE)).get_length()
         conv_time=time.strftime('%H:%M:%S',time.gmtime(song_length))
         if pygame.mixer.music.get_pos()==-1:
@@ -127,7 +128,7 @@ class MusicPlayer:
             return
         self.track.set(self.playlist.get(ACTIVE))
         self.playlist2.insert(END,self.playlist.get(ACTIVE))
-        
+            
     def removesong(self):
         if self.playlist2.size()==0:
             return
