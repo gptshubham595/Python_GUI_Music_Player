@@ -61,9 +61,9 @@ class MusicPlayer:
         
         SelectedSongsframe = LabelFrame(self.root,text="Selected Tracks:",font=("times new roman",15,"bold"),bg="grey",fg="white",bd=5,relief=GROOVE)
         SelectedSongsframe.place(x=700,y=0,width=300,height=600)
-        self.labelbtn=Label(self.root, text='',width=20,height=1,font=("times new roman",14),fg="black",bg="grey")
+        self.labelbtn=Label(self.root, text='Status: Stopped 0.00s ',width=20,height=1,font=("times new roman",14),fg="black",bg="grey")
         self.labelbtn.place(x=750,y=300)
-        self.songslider= Scale(self.root ,from_ = 0,to = 100,orient = HORIZONTAL ,resolution = 1,command=self.seekbar,width=10,bd=10,bg="grey",length=220)
+        self.songslider= Scale(self.root ,from_ = 0,to = 100,orient = HORIZONTAL ,resolution = 1,width=10,bd=10,bg="grey",length=220)
         self.songslider.set(0)
         self.songslider.place(x=720,y=340)
         # Inserting scrollbar
@@ -107,13 +107,16 @@ class MusicPlayer:
         else:
             current_time=int(pygame.mixer.music.get_pos())/1000
             conv_time=time.strftime('%H:%M:%S',time.gmtime(current_time))    
-            self.labelbtn.config(text='Status: Playing '+str(conv_time)+'s')
-            self.songslider.set(current_time)
-        self.labelbtn.after(1000,self.play_time)
+            if self.check==0:
+                self.labelbtn.config(text='Status: Paused '+str(conv_time)+'s')
+            elif self.check==2:
+                self.labelbtn.config(text='Status: Stopped '+str(conv_time)+'s')
+            else:
+                self.labelbtn.config(text='Status: Playing '+str(conv_time)+'s')
+                self.songslider.set(current_time)
+                self.labelbtn.after(1000,self.play_time)
             
-    def seekbar(self,loc):
-        if self.check!=1:
-            return
+    
         #self.songslider.set(current_time)
         #pygame.mixer.music.set_pos(loc)
         #pygame.mixer.music.play(loops=0, start=int(self.songslider.get()))
